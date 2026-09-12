@@ -4,10 +4,11 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Navbar } from "@heroui-pro/react/navbar"
-import { Button, Kbd, SearchField, Tooltip } from "@heroui/react"
+import { Button, Tooltip } from "@heroui/react"
 import { Icon } from "@iconify/react"
 import { RemotionUIMark } from "@/components/site/mark"
 import { ComponentSearch, useSearchHotkey } from "@/components/site/component-search"
+import { SearchTrigger } from "@/components/site/search-trigger"
 import { siteConfig } from "@/components/site/catalog"
 
 const navItems = [{ href: "/components", label: "Components" }]
@@ -17,7 +18,8 @@ export function SiteNavbar() {
   const pathname = usePathname()
   const [isSearchOpen, setSearchOpen] = React.useState(false)
   const open = React.useCallback(() => setSearchOpen(true), [])
-  useSearchHotkey(open)
+  const toggle = React.useCallback(() => setSearchOpen((v) => !v), [])
+  useSearchHotkey(toggle)
 
   return (
     <>
@@ -55,22 +57,7 @@ export function SiteNavbar() {
           <Navbar.Spacer />
 
           <Navbar.Content className="hidden md:flex">
-            {/* Read-only trigger: typing happens in the ⌘K palette. */}
-            <SearchField
-              aria-label="Search components"
-              className="w-[200px]"
-              variant="secondary"
-              onFocus={open}
-            >
-              <SearchField.Group className="h-8 rounded-full">
-                <SearchField.SearchIcon />
-                <SearchField.Input className="w-16" placeholder="Search…" readOnly />
-                <Kbd className="pointer-events-none mr-1.5 text-xs">
-                  <Kbd.Abbr keyValue="command" />
-                  <Kbd.Content>K</Kbd.Content>
-                </Kbd>
-              </SearchField.Group>
-            </SearchField>
+            <SearchTrigger className="w-[200px] rounded-full" onPress={open} />
 
             <Tooltip delay={300}>
               <Button

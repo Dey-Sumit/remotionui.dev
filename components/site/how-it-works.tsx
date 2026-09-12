@@ -1,3 +1,5 @@
+import { Card } from "@heroui/react"
+
 const steps = [
   {
     n: "01",
@@ -20,14 +22,15 @@ export function HowItWorks() {
   return (
     <div className="grid gap-5 pt-14 sm:grid-cols-3">
       {steps.map((s) => (
-        <div
-          key={s.n}
-          className="flex flex-col items-start gap-2 rounded-[24px] bg-surface p-6 shadow-surface"
-        >
-          <span className="font-mono text-xs tabular-nums text-accent">{s.n}</span>
-          <h3 className="text-sm font-semibold tracking-[-0.01em]">{s.title}</h3>
-          <p className="text-pretty text-sm leading-relaxed text-muted">{s.body}</p>
-        </div>
+        <Card key={s.n}>
+          <Card.Content className="flex flex-col items-start gap-2">
+            <span className="font-mono text-xs tabular-nums text-accent">{s.n}</span>
+            <Card.Title className="text-sm">{s.title}</Card.Title>
+            <Card.Description className="text-pretty text-sm leading-relaxed">
+              {s.body}
+            </Card.Description>
+          </Card.Content>
+        </Card>
       ))}
     </div>
   )

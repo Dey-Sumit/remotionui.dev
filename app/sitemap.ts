@@ -6,6 +6,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: siteConfig.baseUrl, lastModified: now, changeFrequency: "weekly", priority: 1 },
     {
+      url: `${siteConfig.baseUrl}/getting-started`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${siteConfig.baseUrl}/components`,
       lastModified: now,
       changeFrequency: "weekly",

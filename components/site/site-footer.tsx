@@ -3,6 +3,7 @@ import { RemotionUIMark } from "@/components/site/mark"
 import { catalog, siteConfig } from "@/components/site/catalog"
 
 const resources = [
+  { href: "/getting-started", label: "Getting started", external: false },
   { href: "/components", label: "All components", external: false },
   { href: siteConfig.github, label: "GitHub", external: true },
   { href: "https://www.remotion.dev", label: "Remotion", external: true },

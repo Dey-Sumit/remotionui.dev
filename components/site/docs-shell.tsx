@@ -4,13 +4,27 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { AppLayout, Navbar, Sidebar } from "@heroui-pro/react"
-import { Button, Kbd, SearchField, Tooltip } from "@heroui/react"
+import { Button, Tooltip } from "@heroui/react"
 import { Icon } from "@iconify/react"
 import { RemotionUIMark } from "@/components/site/mark"
+import { DocsToc } from "@/components/site/docs-toc"
+import { sectionsForPath } from "@/components/site/docs-sections"
+import { SearchTrigger } from "@/components/site/search-trigger"
 import { ComponentSearch, useSearchHotkey } from "@/components/site/component-search"
 import { catalog, siteConfig } from "@/components/site/catalog"
 
-/** Catalog items bucketed by their primary tag, so the sidebar groups grow with it. */
+const COMPONENTS_SECTION = {
+  href: "/components",
+  label: "Components",
+  icon: "gravity-ui:cube",
+}
+
+const sections = [
+  { href: "/getting-started", label: "Getting Started", icon: "gravity-ui:rocket" },
+  COMPONENTS_SECTION,
+]
+
+/** Catalog items bucketed by their primary tag, so sidebar groups grow with it. */
 function groupedCatalog() {
   const groups = new Map<string, typeof catalog>()
   for (const item of catalog) {
@@ -40,11 +54,18 @@ function SidebarNav({ keyPrefix }: { keyPrefix: string }) {
   return (
     <>
       <Sidebar.Group>
-        <Sidebar.GroupLabel className="flex items-center gap-2">
-          <Icon icon="gravity-ui:rocket" className="size-3.5 text-muted" />
+        <Sidebar.GroupLabel className="text-sm font-semibold text-foreground">
           Overview
         </Sidebar.GroupLabel>
         <Sidebar.Menu aria-label="Overview">
+          <Sidebar.MenuItem
+            href="/getting-started"
+            id={`${keyPrefix}-start`}
+            isCurrent={pathname === "/getting-started"}
+            textValue="Installation"
+          >
+            <Sidebar.MenuLabel>Installation</Sidebar.MenuLabel>
+          </Sidebar.MenuItem>
           <Sidebar.MenuItem
             href="/components"
             id={`${keyPrefix}-all`}
@@ -58,9 +79,8 @@ function SidebarNav({ keyPrefix }: { keyPrefix: string }) {
 
       {groupedCatalog().map(([tag, items]) => (
         <Sidebar.Group key={`${keyPrefix}-${tag}`}>
-          <Sidebar.GroupLabel className="flex items-center gap-2">
-            <Icon icon="gravity-ui:cube" className="size-3.5 text-muted" />
-            <span className="capitalize">{tag}</span>
+          <Sidebar.GroupLabel className="text-sm font-semibold capitalize text-foreground">
+            {tag}
           </Sidebar.GroupLabel>
           <Sidebar.Menu aria-label={tag}>
             {items.map((item) => (
@@ -135,30 +155,21 @@ function DocsSidebar() {
   )
 }
 
-function DocsNavbar({ onSearch }: { onSearch: () => void }) {
+/** Bar 1: identity and global actions. */
+function DocsNavbar({
+  hasOutline,
+  onSearch,
+}: {
+  hasOutline: boolean
+  onSearch: () => void
+}) {
   return (
-    <Navbar maxWidth="full">
-      <Navbar.Header>
+    <Navbar maxWidth="full" height="3.5rem">
+      <Navbar.Header className="px-3">
         <AppLayout.MenuToggle />
-        <Sidebar.Trigger />
+        <Sidebar.Trigger aria-label="Toggle sidebar" />
         <Navbar.Spacer />
-        {/* Read-only trigger: typing happens in the ⌘K palette. */}
-        <SearchField
-          aria-label="Search components"
-          className="w-[220px]"
-          variant="secondary"
-          onFocus={onSearch}
-        >
-          <SearchField.Group className="h-8">
-            <SearchField.SearchIcon />
-            <SearchField.Input className="w-24" placeholder="Search components…" readOnly />
-            <Kbd className="pointer-events-none mr-1.5 text-xs">
-              <Kbd.Abbr keyValue="command" />
-              <Kbd.Content>K</Kbd.Content>
-            </Kbd>
-          </SearchField.Group>
-        </SearchField>
-        <Navbar.Spacer />
+        <SearchTrigger className="w-[200px]" onPress={onSearch} />
         <Navbar.Content>
           <Tooltip delay={300}>
             <Button
@@ -172,25 +183,76 @@ function DocsNavbar({ onSearch }: { onSearch: () => void }) {
             </Button>
             <Tooltip.Content>GitHub</Tooltip.Content>
           </Tooltip>
+          {hasOutline ? (
+            <AppLayout.AsideTrigger
+              closedTooltip="Show page outline"
+              openTooltip="Hide page outline"
+            />
+          ) : null}
         </Navbar.Content>
       </Navbar.Header>
     </Navbar>
   )
 }
 
-/** Docs-site AppLayout: grouped sidebar nav + search, shared by every /components route. */
+/**
+ * Bar 2: section navigation.
+ *
+ * Plain links with a border, not <Tabs>: these change route rather than swap
+ * panels, and the Tabs indicator measures its offset on mount, which lands in
+ * the wrong place whenever the shell around it settles after hydration.
+ */
+function DocsToolbar() {
+  const pathname = usePathname()
+  const current =
+    sections.find((s) => pathname.startsWith(s.href))?.href ??
+    COMPONENTS_SECTION.href
+
+  return (
+    <nav
+      aria-label="Documentation sections"
+      className="flex h-14 items-center gap-1 border-b border-separator bg-background px-3"
+    >
+      {sections.map((s) => {
+        const isCurrent = s.href === current
+        return (
+          <Link
+            key={s.href}
+            href={s.href}
+            aria-current={isCurrent ? "page" : undefined}
+            className={`flex h-14 items-center gap-2 whitespace-nowrap border-b-2 px-3 text-sm no-underline ${
+              isCurrent
+                ? "border-foreground font-medium text-foreground"
+                : "border-transparent text-muted hover:text-foreground"
+            }`}
+          >
+            <Icon icon={s.icon} className="size-4" />
+            {s.label}
+          </Link>
+        )
+      })}
+    </nav>
+  )
+}
+
+/** Docs-site AppLayout: sidebar + two chrome bars + an "On this page" rail. */
 export function DocsShell({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const pathname = usePathname()
+  const hasOutline = sectionsForPath(pathname).length > 0
   const [isSearchOpen, setSearchOpen] = React.useState(false)
   const open = React.useCallback(() => setSearchOpen(true), [])
-  useSearchHotkey(open)
+  const toggle = React.useCallback(() => setSearchOpen((v) => !v), [])
+  useSearchHotkey(toggle)
 
   return (
     <>
       <AppLayout
         navigate={router.push}
-        navbar={<DocsNavbar onSearch={open} />}
+        navbar={<DocsNavbar hasOutline={hasOutline} onSearch={open} />}
+        toolbar={<DocsToolbar />}
         sidebar={<DocsSidebar />}
+        aside={hasOutline ? <DocsToc key={pathname} /> : undefined}
         sidebarCollapsible="offcanvas"
       >
         {children}

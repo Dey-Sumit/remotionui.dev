@@ -75,16 +75,16 @@ export function ComponentSearch({
   )
 }
 
-/** Opens the palette on ⌘K / Ctrl+K. */
-export function useSearchHotkey(onOpen: () => void) {
+/** Toggles the palette on ⌘K / Ctrl+K, so the same chord closes it again. */
+export function useSearchHotkey(onToggle: () => void) {
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        onOpen()
+        onToggle()
       }
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
-  }, [onOpen])
+  }, [onToggle])
 }

@@ -56,10 +56,15 @@ export default async function ComponentPage({ params }: Params) {
         </div>
       </header>
 
-      <ComponentDetail item={item} source={source} />
+      <h2 id="usage" className="pb-4 text-xl font-medium tracking-[-0.02em]">
+          Usage
+        </h2>
+        <ComponentDetail item={item} source={source} />
 
       <section className="flex flex-col gap-4 pt-14">
-        <h2 className="text-xl font-medium tracking-[-0.02em]">Installation</h2>
+        <h2 id="installation" className="text-xl font-medium tracking-[-0.02em]">
+            Installation
+          </h2>
         <InstallCommand command={installCommand(item.name)} size="sm" />
         <p className="text-sm leading-relaxed text-muted">
           Copies the composition to{" "}
@@ -75,7 +80,7 @@ export default async function ComponentPage({ params }: Params) {
       </section>
 
       <section className="flex flex-col gap-4 pt-14">
-        <h2 className="text-xl font-medium tracking-[-0.02em]">Props</h2>
+        <h2 id="props" className="text-xl font-medium tracking-[-0.02em]">Props</h2>
         <PropsTable props={item.props} />
       </section>
 

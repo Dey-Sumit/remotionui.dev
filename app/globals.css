@@ -47,4 +47,8 @@ html[data-theme="glass-dark"] {
   body {
     @apply bg-background text-foreground antialiased;
   }
+  /* Anchored headings clear the docs shell's two sticky bars when jumped to. */
+  :is(h1, h2, h3)[id] {
+    scroll-margin-top: 8rem;
+  }
 }
