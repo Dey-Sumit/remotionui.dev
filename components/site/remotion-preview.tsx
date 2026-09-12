@@ -3,7 +3,13 @@
 import { Player } from "@remotion/player"
 import type { PreviewConfig } from "@/components/site/previews"
 
-export function RemotionPreview({ config }: { config: PreviewConfig }) {
+export function RemotionPreview({
+  config,
+  controls = true,
+}: {
+  config: PreviewConfig
+  controls?: boolean
+}) {
   return (
     <Player
       component={config.component}
@@ -12,13 +18,12 @@ export function RemotionPreview({ config }: { config: PreviewConfig }) {
       compositionWidth={config.width}
       compositionHeight={config.height}
       fps={config.fps}
-      controls
+      controls={controls}
       loop
       autoPlay
       initiallyMuted
       acknowledgeRemotionLicense
       style={{ width: "100%", aspectRatio: `${config.width} / ${config.height}` }}
-      className="rounded-xl"
     />
   )
 }

@@ -6,6 +6,14 @@ import { Icon } from "@iconify/react"
 
 const STORAGE_KEY = "remotion-ui-theme"
 
+/**
+ * Dark mode is parked. The site is light-only for now, so the toggle is not
+ * mounted and the init script always applies `glass-light`. Everything below is
+ * kept intact so switching it back on is a two-line change:
+ *   1. render <ThemeToggle /> in site-navbar.tsx again
+ *   2. restore the commented body of `themeInitScript`
+ */
+
 /** Glass preset from the HeroUI theme dashboard: `glass-light` / `glass-dark` on <html>. */
 function applyTheme(dark: boolean) {
   const c = document.documentElement.classList
@@ -47,15 +55,16 @@ export function ThemeToggle() {
         variant="ghost"
         onPress={toggle}
       >
-        <Icon
-          icon={dark ? "gravity-ui:sun" : "gravity-ui:moon"}
-          className="size-4"
-        />
+        <Icon icon={dark ? "gravity-ui:sun" : "gravity-ui:moon"} className="size-4" />
       </Button>
       <Tooltip.Content>{dark ? "Light theme" : "Dark theme"}</Tooltip.Content>
     </Tooltip>
   )
 }
 
-/** Runs before hydration so the stored theme applies without a flash. */
+/** Runs before hydration. Light-only while dark mode is parked. */
+export const themeInitScript = `document.documentElement.classList.add("glass-light");`
+
+/* Dark-mode version of the init script, restore alongside <ThemeToggle />:
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;var c=document.documentElement.classList;c.add(d?"glass-dark":"glass-light");if(d)c.add("dark")}catch(e){}})();`
+*/

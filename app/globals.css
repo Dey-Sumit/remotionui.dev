@@ -21,6 +21,9 @@ html.glass-light,
 html[data-theme="glass-light"] {
   /* Design Theme */
   --glass-blur: 13px;
+  /* Well behind a component preview. Sits a touch darker than --background so a
+     preview masked at the foot dissolves into a surface instead of into white. */
+  --preview-well: #e9e9e9;
 }
 
 html.glass-dark,
@@ -28,9 +31,11 @@ html[data-theme="glass-dark"] {
   color-scheme: dark;
   /* Design Theme */
   --glass-blur: 44px;
+  --preview-well: #1a1a1a;
 }
 
 @theme inline {
+  --color-preview-well: var(--preview-well);
   --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
@@ -41,9 +46,5 @@ html[data-theme="glass-dark"] {
   }
   body {
     @apply bg-background text-foreground antialiased;
-    /* Glass preset ships an ambient gradient token but does not paint it; layer it here. */
-    background-image: var(--background-gradient);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
   }
 }
