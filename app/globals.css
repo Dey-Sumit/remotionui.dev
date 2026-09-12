@@ -2,8 +2,36 @@
 @import "@heroui/styles";
 @import "@heroui-pro/react/css";
 
+/*
+ * HeroUI Pro Theme (exported from the HeroUI theme dashboard, see DESIGN.md)
+ * Glass preset. Activate with class `glass-light` or `glass-dark` on <html>.
+ */
+@import "@heroui-pro/react/themes/glass";
+
+html.glass-light,
+html[data-theme="glass-light"],
+html.glass-dark,
+html[data-theme="glass-dark"] {
+  /* Border Radius (general + fields) */
+  --radius: 0.5rem;
+  --field-radius: 0.5rem;
+}
+
+html.glass-light,
+html[data-theme="glass-light"] {
+  /* Design Theme */
+  --glass-blur: 13px;
+}
+
+html.glass-dark,
+html[data-theme="glass-dark"] {
+  color-scheme: dark;
+  /* Design Theme */
+  --glass-blur: 44px;
+}
+
 @theme inline {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -13,5 +41,9 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    /* Glass preset ships an ambient gradient token but does not paint it; layer it here. */
+    background-image: var(--background-gradient);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 }

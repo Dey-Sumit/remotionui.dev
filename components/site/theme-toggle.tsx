@@ -6,20 +6,37 @@ import { Icon } from "@iconify/react"
 
 const STORAGE_KEY = "remotion-ui-theme"
 
-export function ThemeToggle() {
-  const [dark, setDark] = React.useState<boolean | null>(null)
+/** Glass preset from the HeroUI theme dashboard: `glass-light` / `glass-dark` on <html>. */
+function applyTheme(dark: boolean) {
+  const c = document.documentElement.classList
+  c.toggle("dark", dark)
+  c.toggle("glass-dark", dark)
+  c.toggle("glass-light", !dark)
+}
 
-  React.useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"))
-  }, [])
+/** Subscribe to the `dark` class on <html> rather than mirroring it into state. */
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  })
+  return () => observer.disconnect()
+}
+
+export function ThemeToggle() {
+  const dark = React.useSyncExternalStore(
+    subscribe,
+    () => document.documentElement.classList.contains("dark"),
+    () => false
+  )
 
   function toggle() {
     const next = !document.documentElement.classList.contains("dark")
-    document.documentElement.classList.toggle("dark", next)
+    applyTheme(next)
     try {
       window.localStorage.setItem(STORAGE_KEY, next ? "dark" : "light")
     } catch {}
-    setDark(next)
   }
 
   return (
@@ -41,4 +58,4 @@ export function ThemeToggle() {
 }
 
 /** Runs before hydration so the stored theme applies without a flash. */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark")}catch(e){}})();`
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;var c=document.documentElement.classList;c.add(d?"glass-dark":"glass-light");if(d)c.add("dark")}catch(e){}})();`

@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, Geist_Mono } from "next/font/google"
 import { siteConfig } from "@/components/site/catalog"
 import { themeInitScript } from "@/components/site/theme-toggle"
 import "./globals.css"
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] })
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] })
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] })
 
 const title = `${siteConfig.name} · ${siteConfig.tagline}`
@@ -49,7 +49,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-svh`}>
+      <body className={`${inter.variable} ${geistMono.variable} min-h-svh`}>
         {children}
       </body>
     </html>

@@ -23,7 +23,11 @@ Remotion compositions. Do not blur these.
 - Use HeroUI semantic tokens only: `bg-background`, `bg-surface`, `text-foreground`,
   `text-muted`, `bg-accent`, `border-border`, `border-separator`, `shadow-surface`.
   No `bg-card`, `text-muted-foreground`, `bg-primary`, `text-destructive`.
-- Dark mode is the `.dark` class (or `data-theme="dark"`) on `<html>`.
+- Theme: the HeroUI Pro **glass** preset exported from the theme dashboard. `DESIGN.md`
+  (tokens, typography, do's and don'ts) and `PRODUCT.md` at the repo root are the source
+  of truth; the CSS overrides live in `app/globals.css`. Font is Inter.
+- Dark mode: `<html>` carries `glass-dark` + `dark`, light carries `glass-light`.
+  `components/site/theme-toggle.tsx` owns this. Do not use bare `.dark` alone.
 - Icons: `@iconify/react` with the `gravity-ui` set. Not lucide.
 - Compound components use dot notation (`Card.Header`, `Navbar.Item`). `onPress`, not `onClick`.
 - Before writing HeroUI code, load the `heroui-react-pro` skill and the
@@ -80,3 +84,13 @@ pnpm registry:build   # shadcn build -> public/r/*.json
 - `@heroui/react` 3.x, `@heroui-pro/react` 1.0 beta. Pro needs `HEROUI_AUTH_TOKEN`
   in CI for `pnpm install`.
 - `pnpm-workspace.yaml` allowlists the Pro postinstall scripts. Keep it.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -1,7 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "kinetic-text",
-  "type": "registry:component",
   "title": "Kinetic Text",
   "description": "A headline that reveals word by word with spring motion, blur, and an accent glow. Plain Remotion, no UI library.",
   "dependencies": [
@@ -14,5 +13,6 @@
       "type": "registry:component",
       "target": "components/remotion/kinetic-text.tsx"
     }
-  ]
+  ],
+  "type": "registry:component"
 }

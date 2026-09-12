@@ -23,7 +23,7 @@ export const previews: Record<string, PreviewConfig> = {
     inputProps: {
       ...kineticTextDefaults,
       fontFamily:
-        "var(--font-geist-sans), Inter, ui-sans-serif, system-ui, sans-serif",
+        "var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif",
     },
     durationInFrames: kineticTextComposition.durationInFrames,
     fps: kineticTextComposition.fps,

@@ -16,7 +16,12 @@ const links = [
 
 export function SiteNavbar() {
   return (
-    <Navbar position="sticky" maxWidth="lg" hideOnScroll={false}>
+    <Navbar
+      position="floating"
+      maxWidth="full"
+      hideOnScroll={false}
+      className="top-4 mx-auto w-[calc(100%-2rem)] max-w-5xl bg-surface backdrop-blur-[var(--glass-blur)] supports-[backdrop-filter]:bg-surface/70"
+    >
       <Navbar.Header>
         <Navbar.Brand>
           <Link href="/" className="flex items-center gap-2.5 no-underline">
