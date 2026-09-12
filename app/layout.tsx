@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
 import { siteConfig } from "@/components/site/catalog"
 import { themeInitScript } from "@/components/site/theme-toggle"
 import "./globals.css"
@@ -51,6 +52,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${geistMono.variable} min-h-svh`}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
