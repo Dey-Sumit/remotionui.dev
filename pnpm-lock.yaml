@@ -30,6 +30,9 @@ importers:
       '@react-aria/utils':
         specifier: ^3.34.1
         version: 3.34.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@remotion/google-fonts':
+        specifier: ^4.0.523
+        version: 4.0.523(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@remotion/player':
         specifier: ^4.0.523
         version: 4.0.523(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -75,6 +78,9 @@ importers:
       tailwind-variants:
         specifier: ^3.3.1
         version: 3.3.1(tailwind-merge@3.6.0)(tailwindcss@4.3.3)
+      zod:
+        specifier: ^4.6.2
+        version: 4.6.2
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.3.3
@@ -923,6 +929,9 @@ packages:
     resolution: {integrity: sha512-AzsuD9OfxTOZMMvTRhlN3oHBwOmFN7tDh27LzqmHt4+uOgPhJT7ZM7/kVs/8/o0WxayMUIk3hBmCFRHv1FUoag==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@remotion/google-fonts@4.0.523':
+    resolution: {integrity: sha512-XECkNxGJRz559uVbEEz3sMGaol4HBaU8XZuYqhuZAMjqrm2/ZkemheHR4EQYlpuu0/oT9or91KMaOmSen4Yqpw==}
 
   '@remotion/player@4.0.523':
     resolution: {integrity: sha512-k9A8TCh5IRWaIIQBcw9ELIMi9Gf/IVapU1UNJI3XWpYXB2nYjyrEPvY2nh7YQnocNHbPpc8S4yfNPKlooUu8GA==}
@@ -3519,6 +3528,9 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.6.2:
+    resolution: {integrity: sha512-lh5RCAGFa1Cm2hjtNwLQhSs/AsqdWnTQaBER9fEwN/88pSh7KOtJavtBx/0VlkN/uFd61SwYmljLMDAsHlvzBQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -4443,6 +4455,13 @@ snapshots:
   '@react-types/shared@3.36.1(react@19.3.0)':
     dependencies:
       react: 19.3.0
+
+  '@remotion/google-fonts@4.0.523(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+    dependencies:
+      remotion: 4.0.523(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+    transitivePeerDependencies:
+      - react
+      - react-dom
 
   '@remotion/player@4.0.523(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
@@ -5407,8 +5426,8 @@ snapshots:
       '@babel/parser': 7.28.0
       eslint: 9.39.5(jiti@2.7.0)
       hermes-parser: 0.25.1
-      zod: 3.25.76
-      zod-validation-error: 4.0.2(zod@3.25.76)
+      zod: 4.6.2
+      zod-validation-error: 4.0.2(zod@4.6.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -7344,10 +7363,12 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-validation-error@4.0.2(zod@3.25.76):
+  zod-validation-error@4.0.2(zod@4.6.2):
     dependencies:
-      zod: 3.25.76
+      zod: 4.6.2
 
   zod@3.25.76: {}
+
+  zod@4.6.2: {}
 
   zwitch@2.0.4: {}

@@ -8,12 +8,67 @@
       "type": "registry:component",
       "title": "Kinetic Text",
       "description": "A headline that reveals word by word with spring motion, blur, and an accent glow. Plain Remotion, no UI library.",
-      "dependencies": ["remotion"],
+      "dependencies": [
+        "remotion"
+      ],
       "files": [
         {
           "path": "registry/remotion/kinetic-text/kinetic-text.tsx",
           "type": "registry:component",
           "target": "components/remotion/kinetic-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "motion-text",
+      "type": "registry:component",
+      "title": "Motion Text",
+      "description": "A word on a soft gradient pill that springs up into place. Five colour presets, no fonts to load.",
+      "dependencies": [
+        "remotion",
+        "zod"
+      ],
+      "files": [
+        {
+          "path": "registry/remotion/motion-text/motion-text.tsx",
+          "type": "registry:component",
+          "target": "components/remotion/motion-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:component",
+      "title": "Text Reveal",
+      "description": "A masked slide-up reveal. Each letter or word rises out of a clipped row on its own spring.",
+      "dependencies": [
+        "remotion",
+        "zod",
+        "@remotion/google-fonts"
+      ],
+      "files": [
+        {
+          "path": "registry/remotion/text-reveal/text-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/remotion/text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "spinning-text-wheel",
+      "type": "registry:component",
+      "title": "Spinning Text Wheel",
+      "description": "A 3D drum of options that spins down and settles on the first line, like a slot reel picking a winner.",
+      "dependencies": [
+        "remotion",
+        "zod",
+        "@remotion/google-fonts"
+      ],
+      "files": [
+        {
+          "path": "registry/remotion/spinning-text-wheel/spinning-text-wheel.tsx",
+          "type": "registry:component",
+          "target": "components/remotion/spinning-text-wheel.tsx"
         }
       ]
     }
